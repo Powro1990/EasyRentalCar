@@ -11,15 +11,14 @@ import static org.assertj.core.api.Assertions.*;
  */
 public class AppTest {
 
-    private Car car;
     private CarRentalManager rentalManager;
 
     @BeforeEach
     void initialize() throws Exception {
-        car = new Car("BMW", "X6", "abc", "Bydgoszcz");
+        rentalManager = new InMemoryCarRentalManager();
     }
 
-    @DisplayName("should create a new car rental offer")
+    @DisplayName("should create a new car rental offer using properties from command")
     @Test
     void test0() throws Exception {
         // given
@@ -29,24 +28,15 @@ public class AppTest {
         CarRentalOffer offer = rentalManager.postOffer(command);
 
         // then
-        assertThat(car.getBrand()).isEqualTo("BMW");
-        assertThat(car.getModel()).isEqualTo("X6");
-        assertThat(car.getVin()).isEqualTo("abc");
-        assertThat(car.getLocation()).isEqualTo("Bydgoszcz");
+        assertThat(offer.getBrand()).isEqualTo(command.getBrand());
+        assertThat(offer.getModel()).isEqualTo(command.getModel());
+        assertThat(offer.getVin()).isEqualTo(command.getVin());
+        assertThat(offer.getLocation()).isEqualTo(command.getLocation());
     }
 
     private CreateOfferCommand createCommand() {
+
         return null;
     }
 
-    @DisplayName("user should have a possibility add a car")
-    @Test
-    void test1() throws Exception {
-        // given
-        User user = new User();
-        // when
-        user.addCar(car);
-        // then
-        assertThat(user.getCars()).isEqualTo(car);
-    }
 }
