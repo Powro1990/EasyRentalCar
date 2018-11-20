@@ -35,8 +35,8 @@ public class AppTest {
     }
 
     private CreateOfferCommand createCommand() {
-
-        return null;
+        CreateOfferCommand offerCommand = new CreateOfferCommand("BMW", "X6", "abc", "Bydgoszcz");
+        return offerCommand;
     }
 
 }
