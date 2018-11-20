@@ -9,6 +9,22 @@ public class CreateOfferCommand {
     private String vin;
     private String location;
 
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public void setVin(String vin) {
+        this.vin = vin;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     public CreateOfferCommand(String brand, String model, String vin, String location) {
         this.brand = brand;
         this.model = model;
@@ -32,6 +48,16 @@ public class CreateOfferCommand {
 
     public String getLocation() {
         return location;
+    }
+
+    @Override
+    public String toString() {
+        return "CreateOfferCommand{" +
+                "brand='" + brand + '\'' +
+                ", model='" + model + '\'' +
+                ", vin='" + vin + '\'' +
+                ", location='" + location + '\'' +
+                '}';
     }
 
     @Override

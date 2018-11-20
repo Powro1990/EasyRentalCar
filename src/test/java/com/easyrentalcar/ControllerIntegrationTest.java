@@ -1,5 +1,7 @@
 package com.easyrentalcar;
 
+import com.easyrentalcar.interfaces.CarRentalManager;
+import com.easyrentalcar.model.CreateOfferCommand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +23,6 @@ public class ControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @LocalServerPort
-    private int port;
     @MockBean
     private CarRentalManager rentalManager;
 
@@ -48,7 +47,7 @@ public class ControllerIntegrationTest {
         )
 
         .andExpect(status().is3xxRedirection())
-                .andExpect(header().string("Location", String.format("http://localhost:%s/offers", port)));
+                .andExpect(header().string("Location", "/offers"));
         // @formatter:on
 
         //then
