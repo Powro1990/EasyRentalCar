@@ -59,5 +59,4 @@ public class AppTest {
         // then
         assertThat(allOffers).hasSize(2);
     }
-
 }
