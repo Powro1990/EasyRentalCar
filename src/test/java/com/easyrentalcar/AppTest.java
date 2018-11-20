@@ -1,13 +1,14 @@
 package com.easyrentalcar;
 
-import org.junit.jupiter.api.Assertions;
+import com.easyrentalcar.interfaces.CarRentalManager;
+import com.easyrentalcar.model.CarRentalOffer;
+import com.easyrentalcar.model.CreateOfferCommand;
+import com.easyrentalcar.services.InMemoryCarRentalManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 

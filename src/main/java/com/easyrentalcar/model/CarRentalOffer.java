@@ -1,4 +1,4 @@
-package com.easyrentalcar;
+package com.easyrentalcar.model;
 
 public class CarRentalOffer {
 

@@ -1,4 +1,4 @@
-package com.easyrentalcar;
+package com.easyrentalcar.model;
 
 import java.util.Objects;
 
@@ -14,6 +14,9 @@ public class CreateOfferCommand {
         this.model = model;
         this.vin = vin;
         this.location = location;
+    }
+
+    public CreateOfferCommand() {
     }
 
     @Override

@@ -1,4 +1,7 @@
-package com.easyrentalcar;
+package com.easyrentalcar.interfaces;
+
+import com.easyrentalcar.model.CarRentalOffer;
+import com.easyrentalcar.model.CreateOfferCommand;
 
 import java.util.Collection;
 
