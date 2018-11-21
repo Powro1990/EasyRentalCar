@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.*;
 /**
  * Unit test for simple App.
  */
-public class AppTest {
+public class CarRentalManagerTest {
 
     private CarRentalManager rentalManager;
 
