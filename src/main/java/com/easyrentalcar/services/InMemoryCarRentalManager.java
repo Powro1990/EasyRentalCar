@@ -8,15 +8,14 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 
-@Service
+// @Service
 public class InMemoryCarRentalManager implements CarRentalManager {
 
     private Collection<CarRentalOffer> offers = new ArrayList<>();
 
     @Override
     public CarRentalOffer postOffer(CreateOfferCommand command) {
-        CarRentalOffer rentalOffer = new CarRentalOffer( command.getBrand(),command.getModel(), command.getVin(), command.getLocation());
-        offers.add(rentalOffer);
+        CarRentalOffer rentalOffer = CarRentalOffer.fromCommand(command);
         return rentalOffer;
     }
 

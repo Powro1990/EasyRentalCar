@@ -7,6 +7,10 @@ import com.easyrentalcar.services.InMemoryCarRentalManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.util.Collection;
 
@@ -15,14 +19,13 @@ import static org.assertj.core.api.Assertions.*;
 /**
  * Unit test for simple App.
  */
+@SpringJUnitConfig
+@SpringBootTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class CarRentalManagerTest {
 
+    @Autowired
     private CarRentalManager rentalManager;
-
-    @BeforeEach
-    void initialize() throws Exception {
-        rentalManager = new InMemoryCarRentalManager();
-    }
 
     @DisplayName("should create a new car rental offer using properties from command")
     @Test

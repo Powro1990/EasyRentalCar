@@ -1,13 +1,30 @@
 package com.easyrentalcar.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
+@Entity
 public class CarRentalOffer {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @NotNull
     private String brand;
+    @NotNull
     private String model;
+    @NotNull
     private String vin;
+    @NotNull
     private String location;
+
+    public static CarRentalOffer fromCommand(CreateOfferCommand command){
+         return new CarRentalOffer(command.getBrand(),command.getModel(), command.getVin(), command.getLocation());
+    }
 
     public CarRentalOffer(String brand, String model, String vin, String location) {
         this.brand = brand;
