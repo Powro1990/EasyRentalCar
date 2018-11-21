@@ -5,25 +5,47 @@
     <title>Car Add Form</title>
 </head>
 <body>
-<form th:action="@{/offers}" method="post" th:object="${offers}">
-    <h1>Add car</h1>
-    <p>Please fill in this form to add car</p>
-    <hr>
+<div>
+    <form th:action="@{/offers}" method="post" th:object="${offers}">
+        <h1>Add car</h1>
+        <p>Please fill in this form to add car</p>
+        <hr>
 
-    <label><b>Brand</b></label>
-    <input type="text" placeholder="Brand" name="brand" required>
+        <label><b>Brand</b></label>
+        <input type="text" placeholder="Brand" name="brand" required>
 
-    <label><b>Model</b></label>
-    <input type="text" placeholder="Model" name="model" required>
+        <label><b>Model</b></label>
+        <input type="text" placeholder="Model" name="model" required>
 
-    <label><b>VIN</b></label>
-    <input type="text" placeholder="Enter VIN" name="vin" required>
+        <label><b>VIN</b></label>
+        <input type="text" placeholder="Enter VIN" name="vin" required>
 
-    <label><b>Location</b></label>
-    <input type="text" placeholder="Enter Location" name="location" required>
-    <hr>
+        <label><b>Location</b></label>
+        <input type="text" placeholder="Enter Location" name="location" required>
+        <hr>
 
-    <button type="submit">add</button>
-</form>
+        <button type="submit">add</button>
+    </form>
+</div>
+<div>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>VIN</th>
+            <th>Location</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="offer : ${offers}">
+            <td th:text="${offer.getBrand()}">123</td>
+            <td th:text="${offer.getModel()}">123</td>
+            <td th:text="${offer.getVin()}">123</td>
+            <td th:text="${offer.getLocation()}">123</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
