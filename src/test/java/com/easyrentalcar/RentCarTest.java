@@ -2,17 +2,20 @@ package com.easyrentalcar;
 
 import com.easyrentalcar.interfaces.CarAlreadyRentException;
 import com.easyrentalcar.interfaces.CarRentalManager;
+import com.easyrentalcar.interfaces.OfferDoesntExistException;
 import com.easyrentalcar.model.CarRentalOffer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static org.assertj.core.api.Assertions.*;
 
 @SpringJUnitConfig
 @SpringBootTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class RentCarTest {
 
     @Autowired
@@ -48,6 +51,16 @@ public class RentCarTest {
 
         //then
         assertThat(ex).isInstanceOf(CarAlreadyRentException.class);
+    }
+
+    @DisplayName("should throw exception when rent a car from non-existing offer")
+    @Test
+    void test2() {
+        // when
+        Throwable ex = catchThrowable(() -> manager.rentCar(666L, "any lesser"));
+
+        // then
+        assertThat(ex).isInstanceOf(OfferDoesntExistException.class);
     }
 }
 
