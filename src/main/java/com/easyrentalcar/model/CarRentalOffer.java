@@ -100,10 +100,6 @@ public class CarRentalOffer {
         this.location = location;
     }
 
-    public String getLessee() {
-        return lessee;
-    }
-
     public void setLessee(String lessee) {
         this.lessee = lessee;
     }

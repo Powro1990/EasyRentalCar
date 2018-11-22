@@ -1,9 +1,8 @@
 package com.easyrentalcar;
 
+import com.easyrentalcar.interfaces.CarAlreadyRentException;
 import com.easyrentalcar.interfaces.CarRentalManager;
 import com.easyrentalcar.model.CarRentalOffer;
-import com.easyrentalcar.model.CreateOfferCommand;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +22,8 @@ public class RentCarTest {
     @Test
     void test() throws Exception {
         // given
-        String brand = "BMW";
-        String model = "850i";
-        String vin = "abc123";
-        String location = "Bydgoszcz";
-        String brand2 = "AUDI";
-        String model2 = "Q8";
-        String vin2 = "AAAAA321";
-        String location2 = "Bydgoszcz";
-        CarRentalOffer offer1 = manager.postOffer(new CreateOfferCommand(brand, model, vin, location));
-        CarRentalOffer offer2 = manager.postOffer(new CreateOfferCommand(brand2, model2, vin2, location2));
+        CarRentalOffer offer1 = manager.postOffer(OfferTestFixture.defaultOffer());
+        CarRentalOffer offer2 = manager.postOffer(OfferTestFixture.defaultOffer());
         String lessee = "goobar";
 
         // when
@@ -43,5 +34,20 @@ public class RentCarTest {
         assertThat(usedOffer2.lessee()).hasValue(lessee);
     }
 
-    // @DisplayName("car from offer cannot be used again when user already rent a car")
+    @DisplayName("car from offer cannot be leased again when user already rent a car from this offer")
+    @Test
+    void test1() throws Exception {
+        //given
+        String firstLessee = "goobar";
+        String secondLessee = "foobar";
+        CarRentalOffer offer = manager.postOffer(OfferTestFixture.defaultOffer());
+        manager.rentCar(offer.getId(), firstLessee);
+
+        //when
+        Throwable ex = catchThrowable(() -> manager.rentCar(offer.getId(), secondLessee));
+
+        //then
+        assertThat(ex).isInstanceOf(CarAlreadyRentException.class);
+    }
 }
+

@@ -1,5 +1,6 @@
 package com.easyrentalcar.services;
 
+import com.easyrentalcar.interfaces.CarAlreadyRentException;
 import com.easyrentalcar.interfaces.CarRentalManager;
 import com.easyrentalcar.model.CarRentalOffer;
 import com.easyrentalcar.model.CreateOfferCommand;
@@ -34,6 +35,9 @@ public class CarRentalOfferService implements CarRentalManager {
     @Override
     public void rentCar(Long id, String lessee) {
         CarRentalOffer offer = carRentalOfferRepository.findById(id).get();
+        if (offer.lessee().isPresent()) {
+            throw new CarAlreadyRentException("car is already leased");
+        }
         offer.setLessee(lessee);
         carRentalOfferRepository.save(offer);
 
