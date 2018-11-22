@@ -6,9 +6,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
+import java.util.Optional;
 
 @Entity
 public class CarRentalOffer {
+    public Long getId() {
+        return id;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,8 +26,10 @@ public class CarRentalOffer {
     @NotNull
     private String location;
 
-    public static CarRentalOffer fromCommand(CreateOfferCommand command){
-         return new CarRentalOffer(command.getBrand(),command.getModel(), command.getVin(), command.getLocation());
+    private String lessee;
+
+    public static CarRentalOffer fromCommand(CreateOfferCommand command) {
+        return new CarRentalOffer(command.getBrand(), command.getModel(), command.getVin(), command.getLocation());
     }
 
     public CarRentalOffer(String brand, String model, String vin, String location) {
@@ -94,4 +100,15 @@ public class CarRentalOffer {
         this.location = location;
     }
 
+    public String getLessee() {
+        return lessee;
+    }
+
+    public void setLessee(String lessee) {
+        this.lessee = lessee;
+    }
+
+    public Optional<String> lessee() {
+        return Optional.ofNullable(lessee);
+    }
 }
