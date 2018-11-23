@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Offers For Rent</title>
+</head>
+<body>
+<div>
+    <form th:action="@{/offerstorent}" method="post" th:object="${offerstorent}">
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>VIN</th>
+            <th>Location</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="offer : ${offerstorent}">
+            <td th:text="${offer.getBrand()}"></td>
+            <td th:text="${offer.getModel()}"></td>
+            <td th:text="${offer.getVin()}"></td>
+            <td th:text="${offer.getLocation()}"></td>
+            <td th:text="${offer.getLessee()}"></td>
+            <td th:text="${offer.isAvailable()}"></td>
+            <button type="submit" th:disabled="${!offer.available}">Rent Car</button>
+        </tr>
+        </tbody>
+    </table>
+    </form>
+</div>
+</body>
+</html>

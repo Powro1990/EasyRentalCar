@@ -2,9 +2,7 @@ package com.easyrentalcar.controller;
 
 import com.easyrentalcar.interfaces.CarRentalManager;
 import com.easyrentalcar.model.CreateOfferCommand;
-import com.easyrentalcar.services.InMemoryCarRentalManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

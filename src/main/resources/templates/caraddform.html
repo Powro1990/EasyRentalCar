@@ -27,25 +27,5 @@
         <button type="submit">add</button>
     </form>
 </div>
-<div>
-    <table border="1">
-        <thead>
-        <tr>
-            <th>Brand</th>
-            <th>Model</th>
-            <th>VIN</th>
-            <th>Location</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="offer : ${offers}">
-            <td th:text="${offer.getBrand()}"></td>
-            <td th:text="${offer.getModel()}"></td>
-            <td th:text="${offer.getVin()}"></td>
-            <td th:text="${offer.getLocation()}"></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
 </body>
 </html>
