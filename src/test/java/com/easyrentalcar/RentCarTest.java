@@ -4,12 +4,15 @@ import com.easyrentalcar.interfaces.CarAlreadyRentException;
 import com.easyrentalcar.interfaces.CarRentalManager;
 import com.easyrentalcar.interfaces.OfferDoesntExistException;
 import com.easyrentalcar.model.CarRentalOffer;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -61,6 +64,22 @@ public class RentCarTest {
 
         // then
         assertThat(ex).isInstanceOf(OfferDoesntExistException.class);
+    }
+
+    @DisplayName("should display not available when car is already leased")
+    @Test
+    void test3() throws Exception {
+        // given
+        String firstLessee = "goobar";
+        CarRentalOffer newOffer = manager.postOffer(OfferTestFixture.defaultOffer());
+        manager.rentCar(newOffer.getId(), firstLessee);
+        CarRentalOffer leasedOffer = manager.findOffer(newOffer.getId()).get();
+
+        // when
+        boolean available = leasedOffer.isAvailable();
+
+        // then
+        assertThat(available).isFalse();
     }
 }
 

@@ -6,11 +6,8 @@
 </head>
 <body>
 <div>
-    <form th:action="@{/offerstorent}" method="post" th:object="${offerstorent}">
     <table border="1">
         <thead>
-        <label><b>Type username</b></label>
-        <input type="text" placeholder="Lessee" name="lessee" required>
         <tr>
             <th>Brand</th>
             <th>Model</th>
@@ -18,22 +15,29 @@
             <th>Location</th>
             <th>Lessee</th>
             <th>Availability</th>
+            <th>Enter username</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="offer : ${offerstorent}">
-            <input type="hidden" th:value="${offer.id}" name="id" />
-            <td th:text="${offer.getBrand()}"></td>
-            <td th:text="${offer.getModel()}"></td>
-            <td th:text="${offer.getVin()}"></td>
-            <td th:text="${offer.getLocation()}"></td>
-            <td th:text="${offer.getLessee()}"></td>
-            <td th:text="${offer.isAvailable()}"></td>
-            <td> <button type="submit" th:disabled="${!offer.available}">Rent Car</button></td>
+        <tr th:each="offer : ${offerstorent}" th:object="${offer}">
+            <form th:action="@{/offerstorent}" method="post">
+                <input type="hidden" th:value="${offer.id}" name="id"/>
+                <td th:text="${offer.getBrand()}"></td>
+                <td th:text="${offer.getModel()}"></td>
+                <td th:text="${offer.getVin()}"></td>
+                <td th:text="${offer.getLocation()}"></td>
+                <td th:text="${offer.getLessee()}"></td>
+                <td th:text="${offer.isAvailable()}"></td>
+                <td>
+                    <input type="text" placeholder="Lessee" name="lessee" required>
+                </td>
+                <td>
+                    <button type="submit" th:disabled="${!offer.available}">Rent Car</button>
+                </td>
+            </form>
         </tr>
         </tbody>
     </table>
-    </form>
 </div>
 </body>
 </html>

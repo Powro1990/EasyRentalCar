@@ -3,7 +3,6 @@ package com.easyrentalcar;
 import com.easyrentalcar.interfaces.CarRentalManager;
 import com.easyrentalcar.model.CarRentalOffer;
 import com.easyrentalcar.model.CreateOfferCommand;
-import com.easyrentalcar.services.InMemoryCarRentalManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

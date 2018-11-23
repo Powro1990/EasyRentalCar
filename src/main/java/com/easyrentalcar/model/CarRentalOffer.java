@@ -1,5 +1,9 @@
 package com.easyrentalcar.model;
 
+import com.easyrentalcar.interfaces.CarAlreadyRentException;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,6 +32,8 @@ public class CarRentalOffer {
 
     private String lessee;
 
+    private boolean available;
+
     public static CarRentalOffer fromCommand(CreateOfferCommand command) {
         return new CarRentalOffer(command.getBrand(), command.getModel(), command.getVin(), command.getLocation());
     }
@@ -37,9 +43,11 @@ public class CarRentalOffer {
         this.model = model;
         this.vin = vin;
         this.location = location;
+        this.available = true;
     }
 
-    public CarRentalOffer() {
+    private CarRentalOffer() {
+        available = true;
     }
 
     @Override
@@ -96,12 +104,30 @@ public class CarRentalOffer {
         return location;
     }
 
+
     public void setLocation(String location) {
         this.location = location;
     }
 
-    public void setLessee(String lessee) {
+    /**
+     * Rents a car from this offer.
+     *
+     * @param lessee the lessee renting a car from this offer
+     * @throws com.easyrentalcar.interfaces.CarAlreadyRentException if this offer is unavailable
+     */
+    public void rentBy(String lessee) {
+        if (!available)
+            throw new CarAlreadyRentException("This offer is unavailable");
         this.lessee = lessee;
+        available = false;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public String getLessee() {
+        return lessee;
     }
 
     public Optional<String> lessee() {

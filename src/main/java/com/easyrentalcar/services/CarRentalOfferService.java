@@ -35,10 +35,7 @@ public class CarRentalOfferService implements CarRentalManager {
     @Override
     public void rentCar(Long id, String lessee) {
         carRentalOfferRepository.findById(id).map(offer -> {
-            if (offer.lessee().isPresent()) {
-                throw new CarAlreadyRentException("car is already leased");
-            }
-            offer.setLessee(lessee);
+            offer.rentBy(lessee);
             carRentalOfferRepository.save(offer);
             return offer;
         }).orElseThrow(() -> new OfferDoesntExistException(String.format("Offer with id %s doesn't exist", id)));

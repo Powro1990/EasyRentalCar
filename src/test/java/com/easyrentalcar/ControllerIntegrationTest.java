@@ -82,4 +82,28 @@ public class ControllerIntegrationTest {
                 .andExpect(model().attribute("offers", cars));
         // @formatter:on
     }
+
+    @DisplayName("should display all offers to rental on get /offerstorent")
+    @Test
+    void test2() throws Exception {
+    	// given
+        Collection<CarRentalOffer> cars = new ArrayList<>();
+        cars.add(new CarRentalOffer("bmw", "x2", "acd", "Bydgoszcz"));
+        cars.add(new CarRentalOffer("bmw", "x3", "adcd", "Bydgoszcz"));
+        cars.add(new CarRentalOffer("bmw", "x4", "acbd", "Bydgoszcz"));
+        when(rentalManager.findAllOffers()).thenReturn(cars);
+
+        // when
+        // @formatter:off
+        mockMvc.perform(get("/offerstorent"))
+
+                // then
+                .andExpect(status().isOk())
+                .andExpect(view().name("offerstorent"))
+                .andExpect(model().attribute("offerstorent", cars));
+        // @formatter:on
+    	// then
+    }
+
+
 }
