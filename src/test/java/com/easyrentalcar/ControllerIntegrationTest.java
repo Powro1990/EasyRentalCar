@@ -3,6 +3,7 @@ package com.easyrentalcar;
 import com.easyrentalcar.interfaces.CarRentalManager;
 import com.easyrentalcar.model.CarRentalOffer;
 import com.easyrentalcar.model.CreateOfferCommand;
+import com.easyrentalcar.services.AccountingService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,6 +34,8 @@ public class ControllerIntegrationTest {
     private MockMvc mockMvc;
     @MockBean
     private CarRentalManager rentalManager;
+    @MockBean
+    private AccountingService accountingService;
 
     @DisplayName("Should post new offer, then redirect to /offers")
     @Test
@@ -85,15 +88,18 @@ public class ControllerIntegrationTest {
         // @formatter:on
     }
 
-    @DisplayName("should display all offers to rental on get /offerstorent")
+    @DisplayName("should display all offers to rental on get /offerstorent and totalEarnings form all offers")
     @Test
     void test2() throws Exception {
-    	// given
+        // given
         Collection<CarRentalOffer> cars = new ArrayList<>();
+        double totalEarnings = 156.90;
         cars.add(new CarRentalOffer("bmw", "x2", "acd", "Bydgoszcz", 900));
         cars.add(new CarRentalOffer("bmw", "x3", "adcd", "Bydgoszcz", 300));
         cars.add(new CarRentalOffer("bmw", "x4", "acbd", "Bydgoszcz", 450));
+
         when(rentalManager.findAllOffers()).thenReturn(cars);
+        when(accountingService.totalEarnings()).thenReturn(totalEarnings);
 
         // when
         // @formatter:off
@@ -102,10 +108,11 @@ public class ControllerIntegrationTest {
                 // then
                 .andExpect(status().isOk())
                 .andExpect(view().name("offerstorent"))
-                .andExpect(model().attribute("offerstorent", cars));
-        // @formatter:on
-    	// then
-    }
+                .andExpect(model().attribute("offerstorent", cars))
+                .andExpect(model().attribute("earnings", totalEarnings));
 
+        // @formatter:on
+        // then
+    }
 
 }

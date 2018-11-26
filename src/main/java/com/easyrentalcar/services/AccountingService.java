@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class AccountingService {
 
     private static final double commission = 0.1;
-    private static double totalEarings;
+    private double totalEarings;
 
     /**
      * Returns the sum of total earnings in this application.

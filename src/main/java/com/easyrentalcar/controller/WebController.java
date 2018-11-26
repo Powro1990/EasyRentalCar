@@ -3,6 +3,7 @@ package com.easyrentalcar.controller;
 import com.easyrentalcar.interfaces.CarRentalManager;
 import com.easyrentalcar.model.CarRentalOffer;
 import com.easyrentalcar.model.CreateOfferCommand;
+import com.easyrentalcar.services.AccountingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +16,12 @@ import org.springframework.web.servlet.ModelAndView;
 public class WebController {
 
     private CarRentalManager carRentalManager;
+    private AccountingService accountingService;
 
     @Autowired
-    public WebController(CarRentalManager carRentalManager) {
+    public WebController(CarRentalManager carRentalManager, AccountingService accountingService) {
         this.carRentalManager = carRentalManager;
+        this.accountingService = accountingService;
     }
 
     @GetMapping(value = "/offers")
@@ -40,6 +43,7 @@ public class WebController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("offerstorent", carRentalManager.findAllOffers());
         modelAndView.setViewName("offerstorent");
+        modelAndView.addObject("earnings", accountingService.totalEarnings());
         return modelAndView;
     }
 

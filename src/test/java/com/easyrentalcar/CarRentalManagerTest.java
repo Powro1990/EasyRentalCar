@@ -4,6 +4,7 @@ import com.easyrentalcar.interfaces.CarRentalManager;
 import com.easyrentalcar.model.CarRentalOffer;
 import com.easyrentalcar.model.CreateOfferCommand;
 import com.easyrentalcar.services.AccountingService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class CarRentalManagerTest {
     private CarRentalManager rentalManager;
     @Autowired
     private AccountingService accService;
+
 
     @DisplayName("should create a new car rental offer using properties from command")
     @Test
@@ -93,7 +95,7 @@ public class CarRentalManagerTest {
 
         assertThat(accService.totalEarnings()).isEqualTo(30.00);
     }
-    
+
     private String anyLessee() {
         return "goobar";
     }
