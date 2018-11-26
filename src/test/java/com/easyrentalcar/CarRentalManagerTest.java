@@ -3,6 +3,7 @@ package com.easyrentalcar;
 import com.easyrentalcar.interfaces.CarRentalManager;
 import com.easyrentalcar.model.CarRentalOffer;
 import com.easyrentalcar.model.CreateOfferCommand;
+import com.easyrentalcar.services.AccountingService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,6 +78,22 @@ public class CarRentalManagerTest {
         assertThat(accService.totalEarnings()).isEqualTo(10.00);
     }
 
+    @DisplayName("should earn 30 when first commission is 10, second commission is 20")
+    @Test
+    void test3() throws Exception {
+
+        // given
+        CarRentalOffer offer = rentalManager.postOffer(OfferTestFixture.offerWithPrice(100.00));
+        CarRentalOffer offer2 = rentalManager.postOffer(OfferTestFixture.offerWithPrice(200.00));
+        // when
+        rentalManager.rentCar(offer.getId(), anyLessee());
+        rentalManager.rentCar(offer2.getId(), anyLessee());
+
+        // then
+
+        assertThat(accService.totalEarnings()).isEqualTo(30.00);
+    }
+    
     private String anyLessee() {
         return "goobar";
     }

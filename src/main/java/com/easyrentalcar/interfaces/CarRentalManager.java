@@ -15,5 +15,4 @@ public interface CarRentalManager {
 
     Optional<CarRentalOffer> findOffer(Long id);
 
-    double countCommission(double price);
 }

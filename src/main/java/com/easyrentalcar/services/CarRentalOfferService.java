@@ -6,6 +6,7 @@ import com.easyrentalcar.interfaces.OfferDoesntExistException;
 import com.easyrentalcar.model.CarRentalOffer;
 import com.easyrentalcar.model.CreateOfferCommand;
 import com.easyrentalcar.repositories.CarRentalOfferRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -15,9 +16,12 @@ import java.util.Optional;
 public class CarRentalOfferService implements CarRentalManager {
 
     private CarRentalOfferRepository carRentalOfferRepository;
+    private AccountingService accountingService;
 
-    public CarRentalOfferService(CarRentalOfferRepository repo) {
+
+    public CarRentalOfferService(CarRentalOfferRepository repo, AccountingService accountingService) {
         carRentalOfferRepository = repo;
+        this.accountingService = accountingService;
     }
 
     @Override
@@ -37,6 +41,7 @@ public class CarRentalOfferService implements CarRentalManager {
         carRentalOfferRepository.findById(id).map(offer -> {
             offer.rentBy(lessee);
             carRentalOfferRepository.save(offer);
+            accountingService.updateEarnings(offer);
             return offer;
         }).orElseThrow(() -> new OfferDoesntExistException(String.format("Offer with id %s doesn't exist", id)));
     }
@@ -46,8 +51,4 @@ public class CarRentalOfferService implements CarRentalManager {
         return carRentalOfferRepository.findById(id);
     }
 
-    @Override
-    public double countCommission(double price) {
-        return price*0.1;
-    }
 }
