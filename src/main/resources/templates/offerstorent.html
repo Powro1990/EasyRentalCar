@@ -6,6 +6,9 @@
 </head>
 <body>
 <div>
+<p align="right" th:text="${earnings}">60000000 #Sapkowski</p>
+</div>
+<div>
     <table border="1">
         <thead>
         <tr>
@@ -13,6 +16,7 @@
             <th>Model</th>
             <th>VIN</th>
             <th>Location</th>
+            <th>Price</th>
             <th>Lessee</th>
             <th>Availability</th>
             <th>Enter username</th>
@@ -26,6 +30,7 @@
                 <td th:text="${offer.getModel()}"></td>
                 <td th:text="${offer.getVin()}"></td>
                 <td th:text="${offer.getLocation()}"></td>
+                <td th:text="${offer.getPrice()}"></td>
                 <td th:text="${offer.getLessee()}"></td>
                 <td th:text="${offer.isAvailable()}"></td>
                 <td>
