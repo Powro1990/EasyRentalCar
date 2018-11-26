@@ -45,4 +45,9 @@ public class CarRentalOfferService implements CarRentalManager {
     public Optional<CarRentalOffer> findOffer(Long id) {
         return carRentalOfferRepository.findById(id);
     }
+
+    @Override
+    public double countCommission(double price) {
+        return 0;
+    }
 }

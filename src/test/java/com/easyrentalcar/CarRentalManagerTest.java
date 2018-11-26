@@ -3,7 +3,6 @@ package com.easyrentalcar;
 import com.easyrentalcar.interfaces.CarRentalManager;
 import com.easyrentalcar.model.CarRentalOffer;
 import com.easyrentalcar.model.CreateOfferCommand;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,4 +61,15 @@ public class CarRentalManagerTest {
         // then
         assertThat(allOffers).hasSize(2);
     }
+
+    @DisplayName("should count commision from rental car offer")
+    @Test
+    void test2() throws Exception {
+        // given
+        double carRentPrice = 100.00;
+
+        // then
+        assertThat(rentalManager.countCommission(carRentPrice)).isEqualTo(10.00);
+    }
 }
+

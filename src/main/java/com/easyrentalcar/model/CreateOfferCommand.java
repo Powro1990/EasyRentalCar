@@ -8,6 +8,15 @@ public class CreateOfferCommand {
     private String model;
     private String vin;
     private String location;
+    private double price;
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
     public void setBrand(String brand) {
         this.brand = brand;

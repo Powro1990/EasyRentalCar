@@ -14,4 +14,6 @@ public interface CarRentalManager {
     void rentCar(Long id, String lessee);
 
     Optional<CarRentalOffer> findOffer(Long id);
+
+    double countCommission(double price);
 }

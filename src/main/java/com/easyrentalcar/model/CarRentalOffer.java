@@ -29,25 +29,35 @@ public class CarRentalOffer {
     private String vin;
     @NotNull
     private String location;
+    @NotNull
+    private double price;
 
     private String lessee;
 
     private boolean available;
 
     public static CarRentalOffer fromCommand(CreateOfferCommand command) {
-        return new CarRentalOffer(command.getBrand(), command.getModel(), command.getVin(), command.getLocation());
+        return new CarRentalOffer(command.getBrand(), command.getModel(), command.getVin(), command.getLocation(), command.getPrice());
     }
 
-    public CarRentalOffer(String brand, String model, String vin, String location) {
+    public CarRentalOffer(@NotNull String brand, @NotNull String model, @NotNull String vin, @NotNull String location, @NotNull double price) {
         this.brand = brand;
         this.model = model;
         this.vin = vin;
         this.location = location;
-        this.available = true;
+        this.price = price;
     }
 
     private CarRentalOffer() {
         available = true;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     @Override
