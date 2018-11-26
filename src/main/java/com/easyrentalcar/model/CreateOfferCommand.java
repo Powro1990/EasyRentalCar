@@ -34,14 +34,19 @@ public class CreateOfferCommand {
         this.location = location;
     }
 
-    public CreateOfferCommand(String brand, String model, String vin, String location) {
+    public CreateOfferCommand(String brand, String model, String vin, String location, Double price) {
         this.brand = brand;
         this.model = model;
         this.vin = vin;
         this.location = location;
+        this.price = price;
     }
 
     public CreateOfferCommand() {
+    }
+
+    public String getLocation() {
+        return location;
     }
 
     @Override
@@ -49,14 +54,16 @@ public class CreateOfferCommand {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CreateOfferCommand that = (CreateOfferCommand) o;
-        return Objects.equals(brand, that.brand) &&
+        return Double.compare(that.price, price) == 0 &&
+                Objects.equals(brand, that.brand) &&
                 Objects.equals(model, that.model) &&
                 Objects.equals(vin, that.vin) &&
                 Objects.equals(location, that.location);
     }
 
-    public String getLocation() {
-        return location;
+    @Override
+    public int hashCode() {
+        return Objects.hash(brand, model, vin, location, price);
     }
 
     @Override
@@ -66,12 +73,8 @@ public class CreateOfferCommand {
                 ", model='" + model + '\'' +
                 ", vin='" + vin + '\'' +
                 ", location='" + location + '\'' +
+                ", price=" + price +
                 '}';
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(brand, model, vin, location);
     }
 
     public String getBrand() {

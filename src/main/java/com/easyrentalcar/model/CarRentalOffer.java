@@ -46,6 +46,7 @@ public class CarRentalOffer {
         this.vin = vin;
         this.location = location;
         this.price = price;
+        available = true;
     }
 
     private CarRentalOffer() {
@@ -65,7 +66,8 @@ public class CarRentalOffer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CarRentalOffer that = (CarRentalOffer) o;
-        return Objects.equals(brand, that.brand) &&
+        return Double.compare(that.price, price) == 0 &&
+                Objects.equals(brand, that.brand) &&
                 Objects.equals(model, that.model) &&
                 Objects.equals(vin, that.vin) &&
                 Objects.equals(location, that.location);
@@ -73,7 +75,7 @@ public class CarRentalOffer {
 
     @Override
     public int hashCode() {
-        return Objects.hash(brand, model, vin, location);
+        return Objects.hash(brand, model, vin, location, price);
     }
 
     @Override
@@ -83,6 +85,7 @@ public class CarRentalOffer {
                 ", model='" + model + '\'' +
                 ", vin='" + vin + '\'' +
                 ", location='" + location + '\'' +
+                ", price=" + price +
                 '}';
     }
 

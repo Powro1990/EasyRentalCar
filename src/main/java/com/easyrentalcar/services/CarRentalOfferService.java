@@ -48,6 +48,6 @@ public class CarRentalOfferService implements CarRentalManager {
 
     @Override
     public double countCommission(double price) {
-        return 0;
+        return price*0.1;
     }
 }

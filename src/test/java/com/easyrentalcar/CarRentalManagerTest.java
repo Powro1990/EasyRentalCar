@@ -24,6 +24,8 @@ public class CarRentalManagerTest {
 
     @Autowired
     private CarRentalManager rentalManager;
+    @Autowired
+    private AccountingService accService;
 
     @DisplayName("should create a new car rental offer using properties from command")
     @Test
@@ -42,7 +44,7 @@ public class CarRentalManagerTest {
     }
 
     private CreateOfferCommand createCommand() {
-        CreateOfferCommand offerCommand = new CreateOfferCommand("BMW", "X6", "abc", "Bydgoszcz");
+        CreateOfferCommand offerCommand = new CreateOfferCommand("BMW", "X6", "abc", "Bydgoszcz", 1000.0);
         return offerCommand;
     }
 
@@ -50,8 +52,8 @@ public class CarRentalManagerTest {
     @Test
     void test1() throws Exception {
         // given
-        CreateOfferCommand offerCommand1 = new CreateOfferCommand("BMW", "X6", "abc", "Bydgoszcz");
-        CreateOfferCommand offerCommand2 = new CreateOfferCommand("Fiat", "500", "abcd", "Bydgoszcz");
+        CreateOfferCommand offerCommand1 = new CreateOfferCommand("BMW", "X6", "abc", "Bydgoszcz", 1000.0);
+        CreateOfferCommand offerCommand2 = new CreateOfferCommand("Fiat", "500", "abcd", "Bydgoszcz", 1000.0);
         rentalManager.postOffer(offerCommand1);
         rentalManager.postOffer(offerCommand2);
 
@@ -62,14 +64,21 @@ public class CarRentalManagerTest {
         assertThat(allOffers).hasSize(2);
     }
 
-    @DisplayName("should count commision from rental car offer")
+    @DisplayName("should earn 10.00 from rental car offer when offer price is 100.00")
     @Test
     void test2() throws Exception {
         // given
-        double carRentPrice = 100.00;
+        CarRentalOffer offer = rentalManager.postOffer(OfferTestFixture.offerWithPrice(100.00));
+
+        // when
+        rentalManager.rentCar(offer.getId(), anyLessee());
 
         // then
-        assertThat(rentalManager.countCommission(carRentPrice)).isEqualTo(10.00);
+        assertThat(accService.totalEarnings()).isEqualTo(10.00);
+    }
+
+    private String anyLessee() {
+        return "goobar";
     }
 }
 

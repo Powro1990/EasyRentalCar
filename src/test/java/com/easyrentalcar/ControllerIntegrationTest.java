@@ -42,7 +42,8 @@ public class ControllerIntegrationTest {
         String model = "850i";
         String vin = "abc123";
         String location = "Bydgoszcz";
-        CreateOfferCommand expectedCommand = new CreateOfferCommand(brand, model, vin, location);
+        Double price = 1000.0;
+        CreateOfferCommand expectedCommand = new CreateOfferCommand(brand, model, vin, location, price);
 
         //when
         // @formatter:off
@@ -52,6 +53,7 @@ public class ControllerIntegrationTest {
                         .param("model", model)
                         .param("vin", vin)
                         .param("location", location)
+                        .param("price", price.toString())
         )
 
                 .andExpect(status().is3xxRedirection())
@@ -67,9 +69,9 @@ public class ControllerIntegrationTest {
     void test1() throws Exception {
         //given
         Collection<CarRentalOffer> cars = new ArrayList<>();
-        cars.add(new CarRentalOffer("bmw", "x2", "acd", "Bydgoszcz"));
-        cars.add(new CarRentalOffer("bmw", "x3", "adcd", "Bydgoszcz"));
-        cars.add(new CarRentalOffer("bmw", "x4", "acbd", "Bydgoszcz"));
+        cars.add(new CarRentalOffer("bmw", "x2", "acd", "Bydgoszcz", 100));
+        cars.add(new CarRentalOffer("bmw", "x3", "adcd", "Bydgoszcz", 200));
+        cars.add(new CarRentalOffer("bmw", "x4", "acbd", "Bydgoszcz", 800000));
         when(rentalManager.findAllOffers()).thenReturn(cars);
 
         //when
@@ -88,9 +90,9 @@ public class ControllerIntegrationTest {
     void test2() throws Exception {
     	// given
         Collection<CarRentalOffer> cars = new ArrayList<>();
-        cars.add(new CarRentalOffer("bmw", "x2", "acd", "Bydgoszcz"));
-        cars.add(new CarRentalOffer("bmw", "x3", "adcd", "Bydgoszcz"));
-        cars.add(new CarRentalOffer("bmw", "x4", "acbd", "Bydgoszcz"));
+        cars.add(new CarRentalOffer("bmw", "x2", "acd", "Bydgoszcz", 900));
+        cars.add(new CarRentalOffer("bmw", "x3", "adcd", "Bydgoszcz", 300));
+        cars.add(new CarRentalOffer("bmw", "x4", "acbd", "Bydgoszcz", 450));
         when(rentalManager.findAllOffers()).thenReturn(cars);
 
         // when
