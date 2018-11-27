@@ -13,7 +13,10 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.util.Collection;
+import java.util.List;
 
+import static com.easyrentalcar.OfferTestFixture.offerWithLocation;
+import static com.easyrentalcar.OfferTestFixture.offerWithPrice;
 import static org.assertj.core.api.Assertions.*;
 
 /**
@@ -71,7 +74,7 @@ public class CarRentalManagerTest {
     @Test
     void test2() throws Exception {
         // given
-        CarRentalOffer offer = rentalManager.postOffer(OfferTestFixture.offerWithPrice(100.00));
+        CarRentalOffer offer = rentalManager.postOffer(offerWithPrice(100.00));
 
         // when
         rentalManager.rentCar(offer.getId(), anyLessee());
@@ -85,8 +88,8 @@ public class CarRentalManagerTest {
     void test3() throws Exception {
 
         // given
-        CarRentalOffer offer = rentalManager.postOffer(OfferTestFixture.offerWithPrice(100.00));
-        CarRentalOffer offer2 = rentalManager.postOffer(OfferTestFixture.offerWithPrice(200.00));
+        CarRentalOffer offer = rentalManager.postOffer(offerWithPrice(100.00));
+        CarRentalOffer offer2 = rentalManager.postOffer(offerWithPrice(200.00));
         // when
         rentalManager.rentCar(offer.getId(), anyLessee());
         rentalManager.rentCar(offer2.getId(), anyLessee());
@@ -98,6 +101,25 @@ public class CarRentalManagerTest {
 
     private String anyLessee() {
         return "goobar";
+    }
+
+    @DisplayName("should find offer by location")
+    @Test
+    void test4() throws Exception {
+        //given
+        CarRentalOffer offer1 = createOfferWithLocation("Bydgoszcz");
+        CarRentalOffer offer2 = createOfferWithLocation("Bydgoszcz");
+        CarRentalOffer offer3 = createOfferWithLocation("Gdansk");
+        CarRentalOffer offer4 = createOfferWithLocation("Poznan");
+
+        //when
+        List<CarRentalOffer> offers = rentalManager.findOfferByLocation("Bydgoszcz");
+        //then
+        assertThat(offers).containsOnly(offer1, offer2);
+    }
+
+    private CarRentalOffer createOfferWithLocation(String location) {
+        return rentalManager.postOffer(offerWithLocation(location));
     }
 }
 

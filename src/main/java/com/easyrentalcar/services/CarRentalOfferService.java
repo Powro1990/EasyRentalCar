@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -51,4 +52,8 @@ public class CarRentalOfferService implements CarRentalManager {
         return carRentalOfferRepository.findById(id);
     }
 
+    @Override
+    public List<CarRentalOffer> findOfferByLocation(String location) {
+        return carRentalOfferRepository.findByLocation(location);
+    }
 }

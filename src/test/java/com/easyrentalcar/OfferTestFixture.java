@@ -15,4 +15,10 @@ public class OfferTestFixture {
         defaultOffer.setPrice(price);
         return defaultOffer;
     }
+
+    public static CreateOfferCommand offerWithLocation(String location){
+        CreateOfferCommand defaultOffer = defaultOffer();
+        defaultOffer.setLocation(location);
+        return defaultOffer;
+    }
 }
