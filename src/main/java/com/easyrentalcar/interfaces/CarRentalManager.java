@@ -4,6 +4,7 @@ import com.easyrentalcar.model.CarRentalOffer;
 import com.easyrentalcar.model.CreateOfferCommand;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 public interface CarRentalManager {
@@ -15,4 +16,5 @@ public interface CarRentalManager {
 
     Optional<CarRentalOffer> findOffer(Long id);
 
+    List<CarRentalOffer> findOfferByLocation(String bydgoszcz);
 }
