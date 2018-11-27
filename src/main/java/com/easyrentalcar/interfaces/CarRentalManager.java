@@ -16,5 +16,5 @@ public interface CarRentalManager {
 
     Optional<CarRentalOffer> findOffer(Long id);
 
-    List<CarRentalOffer> findOfferByLocation(String bydgoszcz);
+    List<CarRentalOffer> findOfferByLocation(String location);
 }

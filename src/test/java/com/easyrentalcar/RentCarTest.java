@@ -4,15 +4,12 @@ import com.easyrentalcar.interfaces.CarAlreadyRentException;
 import com.easyrentalcar.interfaces.CarRentalManager;
 import com.easyrentalcar.interfaces.OfferDoesntExistException;
 import com.easyrentalcar.model.CarRentalOffer;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
-
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -28,8 +25,8 @@ public class RentCarTest {
     @Test
     void test() throws Exception {
         // given
-        CarRentalOffer offer1 = manager.postOffer(OfferTestFixture.defaultOffer());
-        CarRentalOffer offer2 = manager.postOffer(OfferTestFixture.defaultOffer());
+        CarRentalOffer offer1 = manager.postOffer(OfferTestFixture.defaultOfferCommand());
+        CarRentalOffer offer2 = manager.postOffer(OfferTestFixture.defaultOfferCommand());
         String lessee = "goobar";
 
         // when
@@ -46,7 +43,7 @@ public class RentCarTest {
         //given
         String firstLessee = "goobar";
         String secondLessee = "foobar";
-        CarRentalOffer offer = manager.postOffer(OfferTestFixture.defaultOffer());
+        CarRentalOffer offer = manager.postOffer(OfferTestFixture.defaultOfferCommand());
         manager.rentCar(offer.getId(), firstLessee);
 
         //when
@@ -71,7 +68,7 @@ public class RentCarTest {
     void test3() throws Exception {
         // given
         String firstLessee = "goobar";
-        CarRentalOffer newOffer = manager.postOffer(OfferTestFixture.defaultOffer());
+        CarRentalOffer newOffer = manager.postOffer(OfferTestFixture.defaultOfferCommand());
         manager.rentCar(newOffer.getId(), firstLessee);
         CarRentalOffer leasedOffer = manager.findOffer(newOffer.getId()).get();
 

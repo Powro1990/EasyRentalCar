@@ -9,7 +9,11 @@
 <p th:text="${earnings}">60000000 #Sapkowski</p>
 </div>
 <div>
-    <label>Search By City</label><input type="text" name="search"> <button type="submit">Search</button>
+    <form th:action="@{/offerstorent}" method="get">
+    <label>Search By City</label>
+        <input type="text" name="findByLocation">
+        <button type="submit">Search</button>
+    </form>
 </div>
 <div>
     <table border="1">

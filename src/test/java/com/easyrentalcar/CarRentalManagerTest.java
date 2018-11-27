@@ -4,7 +4,6 @@ import com.easyrentalcar.interfaces.CarRentalManager;
 import com.easyrentalcar.model.CarRentalOffer;
 import com.easyrentalcar.model.CreateOfferCommand;
 import com.easyrentalcar.services.AccountingService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +14,8 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import java.util.Collection;
 import java.util.List;
 
-import static com.easyrentalcar.OfferTestFixture.offerWithLocation;
-import static com.easyrentalcar.OfferTestFixture.offerWithPrice;
+import static com.easyrentalcar.OfferTestFixture.offerCommandWithLocation;
+import static com.easyrentalcar.OfferTestFixture.offerCommandWithPrice;
 import static org.assertj.core.api.Assertions.*;
 
 /**
@@ -74,7 +73,7 @@ public class CarRentalManagerTest {
     @Test
     void test2() throws Exception {
         // given
-        CarRentalOffer offer = rentalManager.postOffer(offerWithPrice(100.00));
+        CarRentalOffer offer = rentalManager.postOffer(offerCommandWithPrice(100.00));
 
         // when
         rentalManager.rentCar(offer.getId(), anyLessee());
@@ -88,8 +87,8 @@ public class CarRentalManagerTest {
     void test3() throws Exception {
 
         // given
-        CarRentalOffer offer = rentalManager.postOffer(offerWithPrice(100.00));
-        CarRentalOffer offer2 = rentalManager.postOffer(offerWithPrice(200.00));
+        CarRentalOffer offer = rentalManager.postOffer(offerCommandWithPrice(100.00));
+        CarRentalOffer offer2 = rentalManager.postOffer(offerCommandWithPrice(200.00));
         // when
         rentalManager.rentCar(offer.getId(), anyLessee());
         rentalManager.rentCar(offer2.getId(), anyLessee());
@@ -119,7 +118,7 @@ public class CarRentalManagerTest {
     }
 
     private CarRentalOffer createOfferWithLocation(String location) {
-        return rentalManager.postOffer(offerWithLocation(location));
+        return rentalManager.postOffer(offerCommandWithLocation(location));
     }
 }
 

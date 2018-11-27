@@ -10,14 +10,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -115,4 +114,19 @@ public class ControllerIntegrationTest {
         // then
     }
 
+    @DisplayName("should update view when user try to find offer by location")
+    @Test
+    void test3() throws Exception {
+        // given
+        List<CarRentalOffer> offers = Arrays.asList(OfferTestFixture.offerWithLocation("Bydgoszcz"));
+        when(rentalManager.findOfferByLocation("Bydgoszcz")).thenReturn(offers);
+
+        // when
+        mockMvc.perform(get("/offerstorent").param("findByLocation","Bydgoszcz"))
+
+        // then
+        .andExpect(status().isOk())
+                .andExpect(view().name("offerstorent"))
+                .andExpect(model().attribute("offerstorent", offers));
+    }
 }

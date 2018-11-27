@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Collection;
+import java.util.List;
+
 @Controller
 public class WebController {
 
@@ -39,9 +42,15 @@ public class WebController {
     }
 
     @GetMapping(value = "/offerstorent")
-    public ModelAndView viewOffersToRent() {
+    public ModelAndView viewOffersToRent(@RequestParam(value = "findByLocation", required = false) String location) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("offerstorent", carRentalManager.findAllOffers());
+        Collection<CarRentalOffer> offers;
+        if (location != null) {
+            offers = carRentalManager.findOfferByLocation(location);
+        } else {
+            offers = carRentalManager.findAllOffers();
+        }
+        modelAndView.addObject("offerstorent", offers);
         modelAndView.setViewName("offerstorent");
         modelAndView.addObject("earnings", accountingService.totalEarnings());
         return modelAndView;
@@ -50,8 +59,9 @@ public class WebController {
 
     @PostMapping(value = "/offerstorent")
     public String rentCarByButton(@RequestParam(value = "lessee", required = false) String lessee,
-    @RequestParam(value = "id")Long id){
+                                  @RequestParam(value = "id") Long id) {
         carRentalManager.rentCar(id, lessee);
         return "redirect:/offerstorent";
     }
+
 }
