@@ -53,8 +53,7 @@ public class CarRentalOfferService implements CarRentalManager {
     }
 
     @Override
-    public List<CarRentalOffer> findOfferByLocation(String bydgoszcz) {
-        return null;
+    public List<CarRentalOffer> findOfferByLocation(String location) {
+        return carRentalOfferRepository.findByLocation(location);
     }
-
 }
