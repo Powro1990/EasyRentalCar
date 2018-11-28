@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
 
@@ -58,9 +59,9 @@ public class WebController {
 
 
     @PostMapping(value = "/offerstorent")
-    public String rentCarByButton(@RequestParam(value = "lessee", required = false) String lessee,
+    public String rentCarByButton(Principal principal,
                                   @RequestParam(value = "id") Long id) {
-        carRentalManager.rentCar(id, lessee);
+        carRentalManager.rentCar(id, principal.getName());
         return "redirect:/offerstorent";
     }
 
