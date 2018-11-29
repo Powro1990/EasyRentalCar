@@ -3,7 +3,9 @@ package com.easyrentalcar.controller;
 import com.easyrentalcar.interfaces.CarRentalManager;
 import com.easyrentalcar.model.CarRentalOffer;
 import com.easyrentalcar.model.CreateOfferCommand;
+import com.easyrentalcar.model.User;
 import com.easyrentalcar.services.AccountingService;
+import com.easyrentalcar.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +23,13 @@ public class WebController {
 
     private CarRentalManager carRentalManager;
     private AccountingService accountingService;
+    private UserService userService;
 
     @Autowired
-    public WebController(CarRentalManager carRentalManager, AccountingService accountingService) {
+    public WebController(CarRentalManager carRentalManager, AccountingService accountingService, UserService userService) {
         this.carRentalManager = carRentalManager;
         this.accountingService = accountingService;
+        this.userService = userService;
     }
 
     @GetMapping(value = "/offers")
@@ -63,6 +67,19 @@ public class WebController {
                                   @RequestParam(value = "id") Long id) {
         carRentalManager.rentCar(id, principal.getName());
         return "redirect:/offerstorent";
+    }
+
+    @GetMapping(value = "/register")
+    public ModelAndView displayRegisterForm(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("register");
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/register")
+    public String addUserToBase(User user){
+        userService.registerUser(user);
+        return "redirect:/login";
     }
 
 }

@@ -3,14 +3,15 @@ package com.easyrentalcar;
 import com.easyrentalcar.interfaces.CarRentalManager;
 import com.easyrentalcar.model.CarRentalOffer;
 import com.easyrentalcar.model.CreateOfferCommand;
+import com.easyrentalcar.model.User;
 import com.easyrentalcar.services.AccountingService;
+import com.easyrentalcar.services.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -36,6 +37,8 @@ public class ControllerIntegrationTest {
     private CarRentalManager rentalManager;
     @MockBean
     private AccountingService accountingService;
+    @MockBean
+    private UserService userService;
 
     @DisplayName("Should post new offer, then redirect to /offers")
     @Test
@@ -123,11 +126,35 @@ public class ControllerIntegrationTest {
         when(rentalManager.findOfferByLocation("Bydgoszcz")).thenReturn(offers);
 
         // when
-        mockMvc.perform(get("/offerstorent").param("findByLocation","Bydgoszcz"))
+        mockMvc.perform(get("/offerstorent").param("findByLocation", "Bydgoszcz"))
 
-        // then
-        .andExpect(status().isOk())
+                // then
+                .andExpect(status().isOk())
                 .andExpect(view().name("offerstorent"))
                 .andExpect(model().attribute("offerstorent", offers));
+    }
+
+    @DisplayName("should save user from register form")
+    @Test
+    void test4() throws Exception {
+        // given
+        String name = "Admin";
+        String lastname = "AdminX";
+        String email = "admin@mail.com";
+        String phone = "123-123-123";
+        String password = "1234";
+        User user = new User(name, lastname, email, phone, password);
+        // when
+        mockMvc.perform(post("/register")
+                .param("name", name)
+                .param("lastname", lastname)
+                .param("email", email)
+                .param("phone", phone)
+                .param("password", password))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().string("Location", "/login"));
+
+        // then
+        verify(userService, times(1)).registerUser(user);
     }
 }
