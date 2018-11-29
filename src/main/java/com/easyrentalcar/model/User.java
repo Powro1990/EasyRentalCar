@@ -10,14 +10,23 @@ import java.util.Objects;
 @Entity
 public class User {
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long id;
+    public User() {
+    }
+
+    public User(User user) {
+        name = user.getName();
+        lastname = user.getLastname();
+        email = user.getEmail();
+        phone = user.getPhone();
+        password = user.getPassword();
+    }
+
     @NotNull
     private String name;
     @NotNull
     private String lastname;
     @NotNull
+    @Id
     private String email;
     @NotNull
     private String phone;
@@ -39,14 +48,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -86,26 +87,20 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) &&
-                Objects.equals(name, user.name) &&
-                Objects.equals(lastname, user.lastname) &&
-                Objects.equals(email, user.email) &&
-                Objects.equals(phone, user.phone);
+        return Objects.equals(email, user.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, lastname, email, phone);
+        return Objects.hash(email);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
                 '}';
     }
 }
